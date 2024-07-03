@@ -1,0 +1,38 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Task {
+  createdAt  DateTime        @default(now())
+  id         String          @id @default(cuid())
+  methodName String?
+  parameters Json?
+  status     EnumTaskStatus?
+  updatedAt  DateTime        @updatedAt
+}
+
+model ProcessedMethod {
+  createdAt   DateTime  @default(now())
+  id          String    @id @default(cuid())
+  methodName  String?
+  processedAt DateTime?
+  result      Json?
+  updatedAt   DateTime  @updatedAt
+}
+
+model WebSocketConnection {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  isActive  Boolean?
+  updatedAt DateTime @updatedAt
+  url       String?
+}
+
+enum EnumTaskStatus {
+  Option1
+}
